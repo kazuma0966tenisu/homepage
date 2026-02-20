@@ -1,511 +1,97 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>漫才特化ライブ まんとくん | 日本一早いM-1対策ライブ</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <style>
         /* =========================================
-           CSS Variables & Reset
+           1. Hero Section (Animated) - NEW VERSION
            ========================================= */
-        :root {
-            --bg-color: #111111;
-            --text-main: #e0e0e0;
-            --gold-light: #d4af37;
-            --gold-dark: #aa7c11;
-            --red-accent: #8b0000;
-            --font-mincho: 'Noto Serif JP', serif;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: var(--font-mincho);
-            line-height: 1.6;
-            padding-bottom: 80px; /* フローティングボタンの余白 */
-            overflow-x: hidden;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        /* =========================================
-           Animations (Scroll Fade-in)
-           ========================================= */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 1s ease-out, transform 1s ease-out;
-        }
-
-        .fade-in.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* =========================================
-           Common Styles
-           ========================================= */
-        section {
-            padding: 80px 20px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        h2.section-title {
-            text-align: center;
-            font-size: 2rem;
-            color: var(--gold-light);
-            margin-bottom: 40px;
-            letter-spacing: 0.1em;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-            border-bottom: 1px solid #333;
-            padding-bottom: 15px;
-        }
-
-        /* Button Style */
-        .btn-gold {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
-            color: #000;
-            font-weight: 900;
-            padding: 15px 40px;
-            border-radius: 4px;
-            font-size: 1.2rem;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            text-align: center;
-            border: 1px solid #fff;
-        }
-
-        .btn-gold:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
-        }
-
-        /* =========================================
-           1. Hero Section
-           ========================================= */
-        .hero {
+        .hero-animated {
             position: relative;
-            height: 100vh;
+            width: 100%;
+            /* スマホの画面高さいっぱいに表示 */
+            height: 100svh; /* svhはスマホのアドレスバーを考慮した高さ */
             min-height: 600px;
+            background-color: #111; /* 画像ロード前の背景色 */
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start; /* 上寄せで配置 */
             align-items: center;
-            text-align: center;
-            padding: 20px;
-            /* 富士山や和紙、金屏風を連想させる渋いグラデーション */
-            background: 
-                radial-gradient(circle at bottom, rgba(170, 124, 17, 0.2) 0%, transparent 60%),
-                linear-gradient(to bottom, #111111 0%, #1a1a1a 100%);
-            border-bottom: 2px solid var(--gold-dark);
+            /* 背景画像（富士山と鶴） */
+            background-image: url('bg.png'); /* リネームしたファイル名 */
+            background-size: cover;
+            background-position: center bottom; /* 下寄りで表示して富士山を見せる */
+            /* 背景のアニメーション */
+            opacity: 0; /* 最初は透明 */
+            animation: fadeInBg 2s ease-in-out forwards;
+            padding-top: 5vh; /* 上部の余白 */
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)"/></svg>');
-            opacity: 0.05;
-            pointer-events: none;
-        }
-
-        .hero-catch {
-            font-size: 1.1rem;
-            color: var(--red-accent);
-            font-weight: 700;
+        /* --- 各パーツのスタイルとアニメーション設定 --- */
+        
+        /* メインタイトル「まんとくん」（上からスライドイン） */
+        .anim-title-main {
+            width: 80%;
+            max-width: 500px;
             margin-bottom: 20px;
-            letter-spacing: 0.05em;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-            z-index: 1;
+            /* アニメーション初期状態 */
+            opacity: 0;
+            transform: translateY(-50px); /* 上にずらしておく */
+            /* 背景出現(2s)の後、1秒かけてスライドイン */
+            animation: slideDownTitle 1s ease-out 2.2s forwards;
         }
 
-        .hero-title {
-            font-size: 3.5rem;
-            color: var(--gold-light);
-            font-weight: 900;
-            margin-bottom: 40px;
-            line-height: 1.2;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.9);
-            z-index: 1;
+        /* サブタイトル＋出演者（左からスライドイン） */
+        .anim-sub-cast {
+            width: 70%;
+            max-width: 400px;
+            /* アニメーション初期状態 */
+            opacity: 0;
+            transform: translateX(-50px); /* 左にずらしておく */
+            /* メインタイトル出現(2.2s+1s)の後、1秒かけてスライドイン */
+            animation: slideRightCast 1s ease-out 3.4s forwards;
         }
 
-        .hero-title span {
-            display: block;
-            font-size: 1.5rem;
-            color: #fff;
-            margin-top: 10px;
-            font-weight: 400;
+        /* ボタンコンテナ（最後にフワッと表示） */
+        .hero-btn-container {
+            margin-top: auto; /* これで一番下に押し下げる */
+            margin-bottom: 10vh; /* 下部の余白 */
+            z-index: 10;
+            /* アニメーション初期状態 */
+            opacity: 0;
+            /* すべて完了(3.4s+1s)の後、1秒かけてフェードイン */
+            animation: fadeInBtn 1s ease-in-out 4.6s forwards;
         }
 
-        /* =========================================
-           2. Concept Section
-           ========================================= */
-        .concept-text {
-            font-size: 1.2rem;
-            line-height: 2;
-            text-align: center;
-            font-weight: 700;
-            color: #fff;
-            background: rgba(255, 255, 255, 0.03);
-            padding: 40px 20px;
-            border-left: 4px solid var(--red-accent);
-            border-right: 4px solid var(--red-accent);
+        /* --- アニメーションの動きの定義（キーフレーム） --- */
+        /* 背景：透明→不透明 */
+        @keyframes fadeInBg {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+        /* タイトル：上から下へ＋不透明 */
+        @keyframes slideDownTitle {
+            from { opacity: 0; transform: translateY(-50px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        /* 出演者：左から右へ＋不透明 */
+        @keyframes slideRightCast {
+            from { opacity: 0; transform: translateX(-50px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+        /* ボタン：透明→不透明 */
+        @keyframes fadeInBtn {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
-        /* =========================================
-           3. Cast Section
-           ========================================= */
-        .cast-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-        }
-
-        @media (min-width: 600px) {
-            .cast-grid {
-                grid-template-columns: repeat(2, 1fr);
+        /* --- スマホ向けの微調整（メディアクエリ） --- */
+        @media (max-width: 480px) {
+            .anim-title-main {
+                width: 90%; /* スマホでは少し大きく */
+                margin-top: 5vh;
+            }
+            .anim-sub-cast {
+                width: 85%; /* スマホでは少し大きく */
+                margin-left: -10%; /* 少し左寄せにしてバランス調整 */
+            }
+            .hero-btn-container {
+                 margin-bottom: 15vh; /* ボタン位置の微調整 */
             }
         }
-
-        .cast-card {
-            background-color: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 4px;
-            overflow: hidden;
-            transition: border-color 0.3s;
-        }
-
-        .cast-card:hover {
-            border-color: var(--gold-dark);
-        }
-
-        .cast-img-placeholder {
-            width: 100%;
-            height: 200px;
-            background-color: #2a2a2a;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #555;
-            font-size: 0.9rem;
-            border-bottom: 1px solid #333;
-        }
-
-        .cast-info {
-            padding: 20px;
-            text-align: center;
-        }
-
-        .cast-name {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 15px;
-        }
-
-        .cast-links {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        .cast-links a {
-            color: var(--gold-light);
-            font-size: 1.2rem;
-            transition: color 0.3s, transform 0.3s;
-        }
-
-        .cast-links a:hover {
-            color: #fff;
-            transform: scale(1.1);
-        }
-
-        /* =========================================
-           4. Information Section
-           ========================================= */
-        .info-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 1.1rem;
-        }
-
-        .info-table th, .info-table td {
-            padding: 15px;
-            border-bottom: 1px dotted #444;
-        }
-
-        .info-table th {
-            text-align: left;
-            color: var(--gold-light);
-            width: 30%;
-            font-weight: 400;
-        }
-
-        .info-table td {
-            color: #fff;
-        }
-
-        /* =========================================
-           5. Notice Section (Accordion)
-           ========================================= */
-        details {
-            background-color: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 4px;
-            margin-bottom: 10px;
-            overflow: hidden;
-        }
-
-        summary {
-            padding: 15px 20px;
-            cursor: pointer;
-            font-weight: 700;
-            color: var(--gold-light);
-            list-style: none;
-            position: relative;
-        }
-
-        summary::-webkit-details-marker {
-            display: none;
-        }
-
-        summary::after {
-            content: '+';
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.5rem;
-        }
-
-        details[open] summary::after {
-            content: '-';
-        }
-
-        .details-content {
-            padding: 0 20px 20px;
-            color: #ccc;
-            line-height: 1.8;
-            font-size: 0.95rem;
-        }
-
-        /* =========================================
-           6. Footer & Floating Button
-           ========================================= */
-        footer {
-            text-align: center;
-            padding: 30px 20px;
-            font-size: 0.8rem;
-            color: #666;
-            border-top: 1px solid #222;
-        }
-
-        .floating-cta {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(17, 17, 17, 0.95);
-            backdrop-filter: blur(5px);
-            padding: 15px 20px;
-            text-align: center;
-            border-top: 1px solid var(--gold-dark);
-            z-index: 1000;
-        }
-
-        .floating-cta .btn-gold {
-            width: 100%;
-            max-width: 400px;
-            padding: 12px 20px;
-            font-size: 1.1rem;
-        }
-
-        /* スマホ向け微調整 */
-        @media (max-width: 480px) {
-            .hero-title { font-size: 2.5rem; }
-            .hero-catch { font-size: 0.95rem; }
-            section { padding: 60px 15px; }
-            .info-table th, .info-table td { display: block; width: 100%; text-align: center; }
-            .info-table th { padding-bottom: 5px; border-bottom: none; }
-            .info-table td { padding-top: 0; padding-bottom: 20px; }
-        }
-    </style>
-</head>
-<body>
-
-    <header class="hero">
-        <p class="hero-catch fade-in">2025年の賞レースは、もうここから始まっている。<br>日本一早いM-1対策ライブ。</p>
-        <h1 class="hero-title fade-in" style="animation-delay: 0.3s;">
-            <span>漫才特化ライブ</span>
-            まんとくん
-        </h1>
-        <div class="fade-in" style="animation-delay: 0.6s; z-index: 1;">
-            <a href="https://tiget.net/events/465840" target="_blank" class="btn-gold">チケットを予約する<br><span style="font-size: 0.8rem; font-weight:normal;">（残りわずか）</span></a>
-        </div>
-    </header>
-
-    <section class="concept fade-in">
-        <h2 class="section-title">背に腹は代えられない。<br>命をかけた本気の2本。</h2>
-        <div class="concept-text">
-            今年のM-1は『金欠のため』<br>背に腹は代えられない、<br>いや、背に腹がくっつくやもしれぬ状況のため、<br>命をかけて本気で挑みます！
-        </div>
-    </section>
-
-    <section class="cast fade-in">
-        <h2 class="section-title">出演者</h2>
-        <div class="cast-grid">
-            
-            <div class="cast-card">
-                <div class="cast-img-placeholder">宣材写真（準備中）</div>
-                <div class="cast-info">
-                    <h3 class="cast-name">ドゥドゥディダーダー</h3>
-                    <div class="cast-links">
-                        <a href="https://stand.fm/channels/6925f8938ddb67b39644a013" target="_blank" title="ラジオ"><i class="fa-solid fa-microphone-lines"></i></a>
-                        <a href="https://x.com/dododedada_saka?s=21&t=Btw6wb0IpouDnjMj3ayxYA" target="_blank" title="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
-                        <a href="https://www.instagram.com/dododedada_saka?igsh=MTZqN3VnMzFhNzhpbQ==" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="cast-card">
-                <div class="cast-img-placeholder">宣材写真（準備中）</div>
-                <div class="cast-info">
-                    <h3 class="cast-name">パーチェス</h3>
-                    <div class="cast-links"></div>
-                </div>
-            </div>
-
-            <div class="cast-card">
-                <div class="cast-img-placeholder">宣材写真（準備中）</div>
-                <div class="cast-info">
-                    <h3 class="cast-name">はるのすけ</h3>
-                    <div class="cast-links"></div>
-                </div>
-            </div>
-
-            <div class="cast-card">
-                <div class="cast-img-placeholder">宣材写真（準備中）</div>
-                <div class="cast-info">
-                    <h3 class="cast-name">えりんぎ探偵</h3>
-                    <div class="cast-links"></div>
-                </div>
-            </div>
-
-            <div class="cast-card">
-                <div class="cast-img-placeholder">宣材写真（準備中）</div>
-                <div class="cast-info">
-                    <h3 class="cast-name">まぐろ兄弟</h3>
-                    <div class="cast-links"></div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <section class="info fade-in">
-        <h2 class="section-title">開催概要</h2>
-        <table class="info-table">
-            <tr>
-                <th>日程</th>
-                <td>2026年2月26日(水)</td>
-            </tr>
-            <tr>
-                <th>時間</th>
-                <td>開場 18:45 / 開演 19:00</td>
-            </tr>
-            <tr>
-                <th>料金</th>
-                <td>1,500円（要予約）</td>
-            </tr>
-            <tr>
-                <th>会場</th>
-                <td>早稲田クローバースタジオ（東京都）</td>
-            </tr>
-        </table>
-    </section>
-
-    <section class="notice fade-in">
-        <h2 class="section-title">ご案内と注意事項</h2>
-        
-        <details>
-            <summary>入場順について</summary>
-            <div class="details-content">
-                TIGET整理番号をお持ちのお客様 → お取り置きのお客様 → 当日券のお客様 の順にご案内いたします。<br>
-                開場直前は混雑が予想されますので、スタッフの指示に従い整列をお願いいたします。
-            </div>
-        </details>
-
-        <details>
-            <summary>キャンセルについて</summary>
-            <div class="details-content">
-                無断キャンセルは固くお断りいたします。キャンセルをご希望の場合は、お問い合わせフォームより必ずご連絡ください。
-            </div>
-        </details>
-
-        <details>
-            <summary>公演中のマナーについて</summary>
-            <div class="details-content">
-                公演中の飲食、写真・動画撮影はご遠慮ください。<br>
-                ※ペットボトルなど、蓋の閉まる容器での水分補給のみ可能です。
-            </div>
-        </details>
-
-        <details>
-            <summary>出待ち・差し入れについて</summary>
-            <div class="details-content">
-                出待ち、入り待ちはご遠慮ください。<br>
-                差し入れがある場合は、事前に受付スタッフにお預けください。なお、生もの、手作りの飲食物、危険物、現金等はお受け取りできません。
-            </div>
-        </details>
-    </section>
-
-    <footer>
-        &copy; 2026 漫才特化ライブ まんとくん All Rights Reserved.
-    </footer>
-
-    <div class="floating-cta">
-        <a href="https://tiget.net/events/465840" target="_blank" class="btn-gold">チケットを予約する (￥1,500)</a>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.1
-            };
-
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, observerOptions);
-
-            document.querySelectorAll('.fade-in').forEach(el => {
-                observer.observe(el);
-            });
-        });
-    </script>
-</body>
-</html>
