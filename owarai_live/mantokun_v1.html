@@ -44,36 +44,40 @@
             color: inherit;
         }
 
-        /* =========================================
-           1. Hero Section (Animated)
+                /* =========================================
+           1. Hero Section (Animated) - 最終調整版
            ========================================= */
         .hero-animated {
             position: relative;
             width: 100%;
-            height: 100svh; /* スマホ画面いっぱいの高さ */
+            height: 100svh;
             min-height: 600px;
-            background-color: #111; 
+            background-color: #111;
             overflow: hidden;
+            /* 背景画像設定 */
+            background-image: url('bg.jpg');
+            background-size: cover;
+            background-position: center bottom;
+            /* 背景アニメーション */
+            opacity: 0;
+            animation: fadeInBg 2s ease-in-out forwards;
+        }
+
+        /* --- スマホ・標準時の配置（見やすさ重視の縦積み） --- */
+        .hero-animated {
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
             align-items: center;
-            
-            /* 背景画像（富士山と鶴） */
-            background-image: url('bg.jpg'); /* 背景はJPEG */
-            background-size: cover;
-            background-position: center bottom;
-            
-            opacity: 0;
-            animation: fadeInBg 2s ease-in-out forwards;
-            padding-top: 5vh;
+            padding-top: 10vh; /* 上の余白 */
         }
 
         /* メインタイトル「まんとくん」 */
         .anim-title-main {
-            width: 80%;
+            width: 85%;
             max-width: 500px;
-            margin-bottom: 20px;
+            margin-bottom: 1vh; /* パーツ間の隙間 */
+            /* アニメーション初期値 */
             opacity: 0;
             transform: translateY(-50px);
             animation: slideDownTitle 1s ease-out 2.2s forwards;
@@ -81,20 +85,61 @@
 
         /* サブタイトル＋出演者 */
         .anim-sub-cast {
-            width: 70%;
-            max-width: 400px;
+            width: 80%;
+            max-width: 450px;
+            /* アニメーション初期値 */
             opacity: 0;
-            transform: translateX(-50px);
+            transform: translateX(-30px); /* スマホは少し控えめに */
             animation: slideRightCast 1s ease-out 3.4s forwards;
         }
 
         /* ボタンコンテナ */
         .hero-btn-container {
-            margin-top: auto;
-            margin-bottom: 10vh;
+            margin-top: auto; /* 一番下に配置 */
+            margin-bottom: 15vh; /* 下の余白 */
             z-index: 10;
+            width: 100%;
+            text-align: center;
+            /* アニメーション初期値 */
             opacity: 0;
             animation: fadeInBtn 1s ease-in-out 4.6s forwards;
+        }
+
+        /* --- PC・大画面時の配置（ポスター完全再現の絶対配置） --- */
+        @media (min-width: 768px) {
+            .hero-animated {
+                display: block; /* Flexboxを解除 */
+                padding-top: 0;
+            }
+
+            /* メインタイトル「まんとくん」（左上に配置） */
+            .anim-title-main {
+                position: absolute;
+                top: 12%;  /* 上からの位置 */
+                left: 8%;  /* 左からの位置 */
+                width: 52%; /* サイズ調整 */
+                max-width: none;
+                margin: 0;
+            }
+
+            /* サブタイトル＋出演者（右側に配置） */
+            .anim-sub-cast {
+                position: absolute;
+                top: 22%;   /* まんとくんの少し下 */
+                right: 8%;  /* 右寄せ */
+                width: 38%; /* サイズ調整 */
+                max-width: none;
+                margin: 0;
+                /* 右からスライドするように変更 */
+                transform: translateX(50px);
+            }
+            
+            /* ボタン（下部中央に配置） */
+            .hero-btn-container {
+                position: absolute;
+                bottom: 12%;
+                margin: 0;
+            }
         }
 
         /* --- アニメーションの動き定義 --- */
@@ -107,7 +152,7 @@
             to   { opacity: 1; transform: translateY(0); }
         }
         @keyframes slideRightCast {
-            from { opacity: 0; transform: translateX(-50px); }
+            /* スマホは左から、PCは右から出るように調整 */
             to   { opacity: 1; transform: translateX(0); }
         }
         @keyframes fadeInBtn {
@@ -115,15 +160,6 @@
             to   { opacity: 1; transform: translateY(0); }
         }
 
-        @media (max-width: 480px) {
-            .anim-title-main { width: 90%; margin-top: 5vh; }
-            .anim-sub-cast { width: 85%; margin-left: -10%; }
-            .hero-btn-container { margin-bottom: 15vh; }
-        }
-
-        /* =========================================
-           Scroll Animations (Lower Sections)
-           ========================================= */
         .fade-in {
             opacity: 0;
             transform: translateY(30px);
