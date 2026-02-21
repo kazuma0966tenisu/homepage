@@ -44,8 +44,19 @@
             color: inherit;
         }
 
-                /* =========================================
-           1. Hero Section (Animated) - 最終調整版
+        /* リンクテキスト用の共通スタイル */
+        .link-text {
+            color: var(--gold-light);
+            text-decoration: underline;
+            transition: opacity 0.3s;
+            font-weight: bold;
+        }
+        .link-text:hover {
+            opacity: 0.7;
+        }
+
+        /* =========================================
+           1. Hero Section (Animated) - まんとくん単体版
            ========================================= */
         .hero-animated {
             position: relative;
@@ -54,90 +65,50 @@
             min-height: 600px;
             background-color: #111;
             overflow: hidden;
-            /* 背景画像設定 */
+            
+            /* 背景画像（富士山と鶴） */
             background-image: url('bg.jpg');
             background-size: cover;
             background-position: center bottom;
-            /* 背景アニメーション */
+            
             opacity: 0;
             animation: fadeInBg 2s ease-in-out forwards;
-        }
-
-        /* --- スマホ・標準時の配置（見やすさ重視の縦積み） --- */
-        .hero-animated {
+            
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
             align-items: center;
-            padding-top: 10vh; /* 上の余白 */
+            padding-top: 5vh;
         }
 
         /* メインタイトル「まんとくん」 */
         .anim-title-main {
             width: 85%;
             max-width: 500px;
-            margin-bottom: 1vh; /* パーツ間の隙間 */
-            /* アニメーション初期値 */
             opacity: 0;
             transform: translateY(-50px);
             animation: slideDownTitle 1s ease-out 2.2s forwards;
         }
 
-        /* サブタイトル＋出演者 */
-        .anim-sub-cast {
-            width: 80%;
-            max-width: 450px;
-            /* アニメーション初期値 */
-            opacity: 0;
-            transform: translateX(-30px); /* スマホは少し控えめに */
-            animation: slideRightCast 1s ease-out 3.4s forwards;
-        }
-
         /* ボタンコンテナ */
         .hero-btn-container {
-            margin-top: auto; /* 一番下に配置 */
-            margin-bottom: 15vh; /* 下の余白 */
+            margin-top: auto;
+            margin-bottom: 12vh;
             z-index: 10;
             width: 100%;
             text-align: center;
-            /* アニメーション初期値 */
             opacity: 0;
-            animation: fadeInBtn 1s ease-in-out 4.6s forwards;
+            /* パーツが減ったのでボタン出現を早めました */
+            animation: fadeInBtn 1s ease-in-out 3.2s forwards; 
         }
 
-        /* --- PC・大画面時の配置（ポスター完全再現の絶対配置） --- */
+        /* PC時の配置（ポスターに合わせて「まんとくん」を右上に配置） */
         @media (min-width: 768px) {
-            .hero-animated {
-                display: block; /* Flexboxを解除 */
-                padding-top: 0;
-            }
-
-            /* メインタイトル「まんとくん」（左上に配置） */
             .anim-title-main {
                 position: absolute;
-                top: 12%;  /* 上からの位置 */
-                left: 8%;  /* 左からの位置 */
-                width: 52%; /* サイズ調整 */
-                max-width: none;
-                margin: 0;
-            }
-
-            /* サブタイトル＋出演者（右側に配置） */
-            .anim-sub-cast {
-                position: absolute;
-                top: 22%;   /* まんとくんの少し下 */
-                right: 8%;  /* 右寄せ */
-                width: 38%; /* サイズ調整 */
-                max-width: none;
-                margin: 0;
-                /* 右からスライドするように変更 */
-                transform: translateX(50px);
-            }
-            
-            /* ボタン（下部中央に配置） */
-            .hero-btn-container {
-                position: absolute;
-                bottom: 12%;
+                top: 10%;
+                right: 12%; 
+                width: 40%;
                 margin: 0;
             }
         }
@@ -151,15 +122,14 @@
             from { opacity: 0; transform: translateY(-50px); }
             to   { opacity: 1; transform: translateY(0); }
         }
-        @keyframes slideRightCast {
-            /* スマホは左から、PCは右から出るように調整 */
-            to   { opacity: 1; transform: translateX(0); }
-        }
         @keyframes fadeInBtn {
             from { opacity: 0; transform: translateY(20px); }
             to   { opacity: 1; transform: translateY(0); }
         }
 
+        /* =========================================
+           Scroll Animations (Lower Sections)
+           ========================================= */
         .fade-in {
             opacity: 0;
             transform: translateY(30px);
@@ -396,17 +366,15 @@
     <header class="hero-animated">
         <img src="title_main.png" alt="漫才特化ライブ まんとくん" class="anim-title-main">
         
-        <img src="title_sub_cast.png" alt="出演者一覧" class="anim-sub-cast">
-        
         <div class="hero-btn-container">
             <a href="https://tiget.net/events/465840" target="_blank" class="btn-gold">チケットを予約する<br><span style="font-size: 0.8rem; font-weight:normal;">（残りわずか）</span></a>
         </div>
     </header>
 
     <section class="concept fade-in">
-        <h2 class="section-title">背に腹は代えられない。<br>命をかけた本気の2本。</h2>
+        <h2 class="section-title">漫才に特化したライブ<br>｢まんとくん｣🦌</h2>
         <div class="concept-text">
-            今年のM-1は『金欠のため』<br>背に腹は代えられない、<br>いや、背に腹がくっつくやもしれぬ状況のため、<br>命をかけて本気で挑みます！
+            日本一早いM-1対策ライブとして<br>全組ネタ2本披露します‼️
         </div>
     </section>
 
@@ -478,7 +446,11 @@
             </tr>
             <tr>
                 <th>会場</th>
-                <td>早稲田クローバースタジオ（東京都）</td>
+                <td>
+                    <a href="https://maps.app.goo.gl/TnctBggXePaajRWr5" target="_blank" class="link-text">
+                        早稲田クローバースタジオ（東京都） <i class="fa-solid fa-map-location-dot"></i>
+                    </a>
+                </td>
             </tr>
         </table>
     </section>
@@ -516,6 +488,22 @@
                 差し入れがある場合は、事前に受付スタッフにお預けください。なお、生もの、手作りの飲食物、危険物、現金等はお受け取りできません。
             </div>
         </details>
+
+        <details>
+            <summary>主催または登録者</summary>
+            <div class="details-content">
+                <a href="https://tiget.net/users/1482915" target="_blank" class="link-text"><i class="fa-solid fa-user"></i> 西野</a>
+            </div>
+        </details>
+
+        <details>
+            <summary>イベントのお問い合わせ</summary>
+            <div class="details-content">
+                以下より主催者へお問い合わせください。<br><br>
+                <a href="https://tiget.net/inquiry?event_id=465840&user_id=1482915" target="_blank" class="link-text"><i class="fa-solid fa-envelope"></i> お問い合わせフォーム</a>
+            </div>
+        </details>
+
     </section>
 
     <footer>
