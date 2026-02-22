@@ -102,13 +102,19 @@
             animation: fadeInBtn 1s ease-in-out 3.2s forwards; 
         }
 
-        /* PC時の配置（ポスターに合わせて「まんとくん」を右上に配置） */
+       /* PC・横長画面時の配置（ポスター比率を保って中央配置） */
         @media (min-width: 768px) {
+            .hero-animated {
+                /* 画面の高さを基準にして、ポスターの縦横比（約7:10）で横幅を制限 */
+                max-width: calc(100svh * 0.7);
+                margin: 0 auto; /* 左右の余白を均等にして中央揃え */
+                box-shadow: 0 0 30px rgba(0,0,0,0.8); /* 少し影をつけてポスター感アップ */
+            }
             .anim-title-main {
                 position: absolute;
-                top: 10%;
-                right: 12%; 
-                width: 40%;
+                top: 8%;
+                right: 5%; 
+                width: 45%;
                 margin: 0;
             }
         }
