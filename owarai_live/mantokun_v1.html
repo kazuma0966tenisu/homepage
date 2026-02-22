@@ -55,18 +55,17 @@
             opacity: 0.7;
         }
 
-        /* =========================================
-           1. Hero Section (Animated) - まんとくん単体版
+/* =========================================
+           1. Hero Section (Animated) - 完全版
            ========================================= */
         .hero-animated {
             position: relative;
             width: 100%;
-            height: 100svh;
-            min-height: 600px;
+            height: 100svh; /* 画面の高さいっぱいに表示 */
+            /* ▼スマホ横向き時に崩れる原因だった min-height: 600px; を削除しました▼ */
             background-color: #111;
             overflow: hidden;
             
-            /* 背景画像（富士山と鶴） */
             background-image: url('bg.jpg');
             background-size: cover;
             background-position: center bottom;
@@ -88,6 +87,7 @@
             opacity: 0;
             transform: translateY(-50px);
             animation: slideDownTitle 1s ease-out 2.2s forwards;
+            z-index: 2;
         }
 
         /* ボタンコンテナ */
@@ -98,17 +98,20 @@
             width: 100%;
             text-align: center;
             opacity: 0;
-            /* パーツが減ったのでボタン出現を早めました */
             animation: fadeInBtn 1s ease-in-out 3.2s forwards; 
         }
 
-       /* PC・横長画面時の配置（ポスター比率を保って中央配置） */
-        @media (min-width: 768px) {
+        /* --- PC・横向き画面（ランドスケープ）時の配置 --- */
+        /* 画面の横幅が768px以上、またはスマホが「横向き」になった時に適用 */
+        @media (min-width: 768px), (orientation: landscape) {
             .hero-animated {
-                /* 画面の高さを基準にして、ポスターの縦横比（約7:10）で横幅を制限 */
-                max-width: calc(100svh * 0.7);
-                margin: 0 auto; /* 左右の余白を均等にして中央揃え */
-                box-shadow: 0 0 30px rgba(0,0,0,0.8); /* 少し影をつけてポスター感アップ */
+                width: 100%;
+                /* 画面の高さに合わせて、ポスターの縦横比（約7:10）を維持する */
+                max-width: calc(100svh * 0.71);
+                margin: 0 auto;
+                box-shadow: 0 0 30px rgba(0,0,0,0.8);
+                display: block; /* Flexbox（縦積み）を解除 */
+                padding-top: 0;
             }
             .anim-title-main {
                 position: absolute;
@@ -116,6 +119,19 @@
                 right: 5%; 
                 width: 45%;
                 margin: 0;
+            }
+            .hero-btn-container {
+                position: absolute;
+                bottom: 8%;
+                margin: 0;
+            }
+        }
+        
+        /* スマホの横向き時（高さが極端に低い時）のみ、ボタンを少し小さくして収める */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .hero-btn-container .btn-gold {
+                padding: 8px 15px;
+                font-size: 0.9rem;
             }
         }
 
