@@ -19,10 +19,9 @@
             --bg-board: #2E5D4B;   
             --text-chalk: #F0F0F0; 
             
-            /* フライヤー・まんとくん参照カラー */
+            /* カラーパレット */
             --logo-green: #3e6b42;
             --gold-btn: #b4963c;
-            --gold-btn-shadow: #8a732e;
             --card-bg: #1a1a1a;
             --accent-wood: #8B5A2B;
             
@@ -161,13 +160,13 @@
             min-width: 200px;
         }
 
-        /* --- Video Section (放送室) --- */
+        /* --- Video Section --- */
         .video-container {
             width: 100%;
             border: 4px solid rgba(255,255,255,0.1);
             background-color: #000;
             box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            line-height: 0; /* 下部の隙間除去 */
+            line-height: 0;
         }
         
         video {
@@ -197,30 +196,36 @@
             font-size: 1.2rem;
         }
 
-        /* --- Member Cards --- */
-        .member-list {
+        /* --- Cards (Members & Staff) --- */
+        .grid-list {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
             gap: 15px;
             list-style: none;
         }
 
-        .member-card {
+        .card-link {
+            display: block;
+            height: 100%;
+        }
+
+        .card-box {
             background-color: var(--card-bg);
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 4px;
             padding: 0;
             text-align: center;
             overflow: hidden;
-            transition: transform 0.2s;
+            transition: transform 0.2s, border-color 0.2s;
+            height: 100%;
         }
 
-        .member-card:hover {
+        .card-link:hover .card-box {
             transform: translateY(-3px);
             border-color: var(--gold-btn);
         }
 
-        .member-img-box {
+        .card-img-box {
             width: 100%;
             aspect-ratio: 1 / 1;
             background-color: #333;
@@ -231,15 +236,22 @@
             font-size: 0.8rem;
         }
         
-        .member-info { padding: 15px 10px; }
+        .card-info { padding: 15px 10px; }
 
-        .member-name {
+        .card-name {
             font-family: var(--font-serif);
             font-size: 1rem;
             font-weight: bold;
             display: block;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             color: #fff;
+        }
+        
+        .card-role {
+            font-size: 0.75rem;
+            color: #aaa;
+            display: block;
+            margin-bottom: 8px;
         }
 
         .sns-links {
@@ -248,8 +260,7 @@
             gap: 15px;
         }
 
-        .sns-links a { color: var(--gold-btn); font-size: 1.1rem; }
-        .sns-links a:hover { color: #fff; text-shadow: 0 0 5px var(--gold-btn); }
+        .sns-links i { color: var(--gold-btn); font-size: 1.1rem; }
 
         /* --- Guidelines --- */
         .guidelines-box {
@@ -265,7 +276,7 @@
         .map-wrapper {
             border: 4px solid #fff;
             line-height: 0;
-            background-color: #eee; /* 地図ロード前の背景 */
+            background-color: #eee;
         }
 
         /* --- Footer --- */
@@ -277,7 +288,6 @@
             border-top: 1px solid rgba(255,255,255,0.1);
             padding-top: 20px;
         }
-        .creator-credit a { text-decoration: underline; }
 
         /* --- Sticky Ticket Button --- */
         .sticky-ticket-bar {
@@ -353,7 +363,7 @@
             <p style="text-align: center; margin-bottom: 10px; font-size: 0.9rem;">第一回ダイジェスト映像</p>
             <div class="video-container">
                 <video controls preload="metadata" poster="https://placehold.co/640x360/000/FFF?text=Digest+Movie">
-                    <source src="./digest_vol1.mp4" type="video/mp4">
+                    <source src="./集団下校_ダイジェスト_vol1.mp4" type="video/mp4">
                     <p>動画を再生するには、videoタグをサポートしたブラウザが必要です。</p>
                 </video>
             </div>
@@ -379,84 +389,119 @@
 
         <section id="member">
             <h2 class="section-title">出演者</h2>
-            <div class="member-list">
-                <div class="member-card">
-                    <div class="member-img-box">IMAGE</div>
-                    <div class="member-info">
-                        <span class="member-name">ドゥドゥディダーダー</span>
+            <div class="grid-list">
+                <div class="card-box">
+                    <div class="card-img-box">IMAGE</div>
+                    <div class="card-info">
+                        <span class="card-name">ドゥドゥディダーダー</span>
                         <div class="sns-links">
-                            <a href="#"><i class="fa-solid fa-microphone"></i></a>
-                            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                            <i class="fa-solid fa-microphone"></i>
+                            <i class="fa-brands fa-x-twitter"></i>
+                            <i class="fa-brands fa-instagram"></i>
                         </div>
                     </div>
                 </div>
-                <div class="member-card">
-                    <div class="member-img-box">IMAGE</div>
-                    <div class="member-info">
-                        <span class="member-name">エコ</span>
+                <div class="card-box">
+                    <div class="card-img-box">IMAGE</div>
+                    <div class="card-info">
+                        <span class="card-name">エコ</span>
                         <div class="sns-links">
-                            <a href="#"><i class="fa-solid fa-microphone"></i></a>
-                            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                            <i class="fa-solid fa-microphone"></i>
+                            <i class="fa-brands fa-x-twitter"></i>
+                            <i class="fa-brands fa-instagram"></i>
                         </div>
                     </div>
                 </div>
-                <div class="member-card">
-                    <div class="member-img-box">IMAGE</div>
-                    <div class="member-info">
-                        <span class="member-name">フィッシュおさかな</span>
+                <div class="card-box">
+                    <div class="card-img-box">IMAGE</div>
+                    <div class="card-info">
+                        <span class="card-name">フィッシュおさかな</span>
                         <div class="sns-links">
-                            <a href="#"><i class="fa-solid fa-microphone"></i></a>
-                            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                            <i class="fa-solid fa-microphone"></i>
+                            <i class="fa-brands fa-x-twitter"></i>
+                            <i class="fa-brands fa-instagram"></i>
                         </div>
                     </div>
                 </div>
-                <div class="member-card">
-                    <div class="member-img-box">IMAGE</div>
-                    <div class="member-info">
-                        <span class="member-name">ノースロード</span>
+                <div class="card-box">
+                    <div class="card-img-box">IMAGE</div>
+                    <div class="card-info">
+                        <span class="card-name">ノースロード</span>
                         <div class="sns-links">
-                            <a href="#"><i class="fa-solid fa-microphone"></i></a>
-                            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                            <i class="fa-solid fa-microphone"></i>
+                            <i class="fa-brands fa-x-twitter"></i>
+                            <i class="fa-brands fa-instagram"></i>
                         </div>
                     </div>
                 </div>
-                <div class="member-card">
-                    <div class="member-img-box">IMAGE</div>
-                    <div class="member-info">
-                        <span class="member-name">最大パルプ</span>
+                <div class="card-box">
+                    <div class="card-img-box">IMAGE</div>
+                    <div class="card-info">
+                        <span class="card-name">最大パルプ</span>
                         <div class="sns-links">
-                            <a href="#"><i class="fa-solid fa-microphone"></i></a>
-                            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                            <i class="fa-solid fa-microphone"></i>
+                            <i class="fa-brands fa-x-twitter"></i>
+                            <i class="fa-brands fa-instagram"></i>
                         </div>
                     </div>
                 </div>
-                <div class="member-card">
-                    <div class="member-img-box">IMAGE</div>
-                    <div class="member-info">
-                        <span class="member-name">悪趣味な色彩のカエル</span>
+                <div class="card-box">
+                    <div class="card-img-box">IMAGE</div>
+                    <div class="card-info">
+                        <span class="card-name">悪趣味な色彩のカエル</span>
                         <div class="sns-links">
-                            <a href="#"><i class="fa-solid fa-microphone"></i></a>
-                            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                            <i class="fa-solid fa-microphone"></i>
+                            <i class="fa-brands fa-x-twitter"></i>
+                            <i class="fa-brands fa-instagram"></i>
                         </div>
                     </div>
                 </div>
-                <div class="member-card">
-                    <div class="member-img-box">IMAGE</div>
-                    <div class="member-info">
-                        <span class="member-name">ファズ宮</span>
+                <div class="card-box">
+                    <div class="card-img-box">IMAGE</div>
+                    <div class="card-info">
+                        <span class="card-name">ファズ宮</span>
                         <div class="sns-links">
-                            <a href="#"><i class="fa-solid fa-microphone"></i></a>
-                            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                            <i class="fa-solid fa-microphone"></i>
+                            <i class="fa-brands fa-x-twitter"></i>
+                            <i class="fa-brands fa-instagram"></i>
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <section id="staff">
+            <h2 class="section-title">職員室</h2>
+            <div class="grid-list">
+                <a href="https://tiget.net/users/1482915" target="_blank" class="card-link">
+                    <div class="card-box">
+                        <div class="card-img-box" style="background-color: #2a2a2a;">
+                            <i class="fa-solid fa-user-tie" style="font-size:2rem; color:#888;"></i>
+                        </div>
+                        <div class="card-info">
+                            <span class="card-role">主催</span>
+                            <span class="card-name">西野</span>
+                            <div class="sns-links">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <a href="#" onclick="alert('公式ホームページは現在準備中です！'); return false;" class="card-link">
+                    <div class="card-box">
+                        <div class="card-img-box" style="background-color: #2a2a2a;">
+                            <i class="fa-solid fa-laptop-code" style="font-size:2rem; color:#888;"></i>
+                        </div>
+                        <div class="card-info">
+                            <span class="card-role">Web制作</span>
+                            <span class="card-name">関根</span>
+                            <div class="sns-links">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
             </div>
         </section>
 
@@ -476,15 +521,12 @@
         <section id="access">
             <h2 class="section-title">通学路</h2>
             <div class="map-wrapper">
-                <iframe src="https://maps.app.goo.gl/K2DkbB5HGBCtpfDT8" width="100%" height="450" style="border:0; filter: grayscale(20%);" allowfullscreen="" loading="lazy"></iframe>
+                <iframe width="100%" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?q=池袋ムーブメントスタジオ&t=&z=15&ie=UTF8&iwloc=&output=embed"></iframe>
             </div>
         </section>
 
         <footer>
             <p style="margin-bottom:10px;">© 2026 集団下校実行委員会</p>
-            <div class="creator-credit">
-                Web Design: <a href="#">Kazuma Sekine</a>
-            </div>
         </footer>
     </div>
 
