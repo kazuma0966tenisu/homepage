@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>集団下校 vol.2 | お笑いライブ告知</title>
+    <meta name="description" content="お笑いライブ「集団下校 vol.2」の公式サイトです。">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kaisei+Decol:wght@400;700&family=Yomogi&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* CSS Variables & Reset */
+        :root {
+            --bg-color: #2E5D4B;   /* 黒板の濃い緑 */
+            --text-color: #F0F0F0; /* チョークの白 */
+            --accent-color: #8B5A2B; /* 木目・机の茶色 */
+            --accent-light: #A67B5B; /* ホバー用などの明るい茶色 */
+            --font-hand: 'Yomogi', cursive;
+            --font-serif: 'Kaisei Decol', serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #1a3c30; /* 背景の外側はさらに暗く */
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: 1.8;
+            padding: 20px;
+            /* チョークの粉のようなテクスチャ感を演出 */
+            background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /* Layout Container (黒板風フレーム) */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: var(--bg-color);
+            border: 12px solid var(--accent-color);
+            border-radius: 8px;
+            padding: 40px 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        /* 装飾：黒板の粉受け（下部の棚） */
+        .container::after {
+            content: '';
+            display: block;
+            width: calc(100% + 24px);
+            height: 15px;
+            background-color: var(--accent-color);
+            position: absolute;
+            bottom: -20px;
+            left: -12px;
+            border-radius: 0 0 4px 4px;
+            box-shadow: 0 5px 5px rgba(0,0,0,0.3);
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-family: var(--font-hand);
+            font-weight: 400;
+            /* チョークの滲み表現 */
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.3);
+        }
+
+        a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed rgba(255,255,255,0.3);
+        }
+
+        .event-title {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.1em;
+        }
+
+        .event-subtitle {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        /* Main Visual */
+        .main-visual {
+            width: 100%;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .flyer-placeholder {
+            width: 100%;
+            max-width: 400px;
+            aspect-ratio: 3/4;
+            background-color: rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            border: 2px dashed rgba(255,255,255,0.2);
+            color: rgba(255,255,255,0.5);
+            font-family: var(--font-hand);
+        }
+
+        .flyer-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            /* 仮画像用スタイル：本番画像がある場合はsrcを差し替えてください */
+        }
+
+        /* Sections General */
+        section {
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 25px;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* 日直などの装飾的な下線 */
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 120%;
+            height: 2px;
+            background-color: var(--text-color);
+            position: absolute;
+            bottom: -5px;
+            left: -10%;
+            opacity: 0.6;
+            border-radius: 50%;
+            box-shadow: 0 1px 2px rgba(255,255,255,0.5);
+        }
+
+        /* Detail List */
+        .info-list {
+            list-style: none;
+            font-size: 1.1rem;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 10px;
+        }
+
+        .info-label {
+            font-family: var(--font-hand);
+            font-size: 1.3rem;
+            color: #dcdcdc;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            padding-left: 10px;
+            font-weight: 700;
+        }
+
+        /* Map */
+        .map-container {
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            position: relative;
+            margin-top: 15px;
+            border: 4px solid rgba(255,255,255,0.1);
+        }
+
+        .map-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            filter: grayscale(30%) contrast(90%); /* 地図を少し馴染ませる */
+        }
+
+        /* Members List */
+        .member-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            text-align: center;
+        }
+
+        .member-item {
+            background-color: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 4px;
+            font-family: var(--font-hand);
+            font-size: 1.2rem;
+            transition: transform 0.2s;
+            /* 出席簿風の罫線 */
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .member-item:hover {
+            transform: translateY(-2px);
+            background-color: rgba(255,255,255,0.15);
+        }
+
+        /* Ticket CTA */
+        .ticket-area {
+            text-align: center;
+            padding: 30px;
+            background-color: rgba(0,0,0,0.2);
+            border-radius: 8px;
+            border: 1px dashed rgba(255,255,255,0.3);
+        }
+
+        .btn-ticket {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: #fff;
+            font-family: var(--font-hand);
+            font-size: 1.5rem;
+            padding: 15px 40px;
+            border-radius: 50px;
+            box-shadow: 0 4px 0 #5e3c1c; /* ボタンの立体感 */
+            transition: all 0.2s;
+            margin-top: 10px;
+        }
+
+        .btn-ticket:hover {
+            background-color: var(--accent-light);
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #5e3c1c;
+        }
+        
+        .btn-ticket i {
+            margin-right: 8px;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 60px;
+            text-align: center;
+            font-size: 0.8rem;
+            opacity: 0.7;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .copyright {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .creator-credit {
+            font-size: 0.75rem;
+            font-family: var(--font-serif);
+        }
+
+        .creator-credit a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Adjustments */
+        @media (min-width: 600px) {
+            .container {
+                padding: 60px 40px;
+            }
+            
+            .info-item {
+                flex-direction: row;
+                align-items: baseline;
+            }
+            
+            .info-label {
+                width: 120px;
+                flex-shrink: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <p class="event-subtitle">お笑いライブ</p>
+            <h1 class="event-title">集団下校 vol.2</h1>
+            <p><i class="fa-solid fa-school"></i> 放課後の教室で待ってます</p>
+        </header>
+
+        <div class="main-visual">
+            <img src="https://placehold.co/600x800/2E5D4B/F0F0F0?text=Flyer+Coming+Soon&font=playfair-display" alt="集団下校 vol.2 フライヤー" class="flyer-img">
+        </div>
+
+        <section id="info">
+            <h2 class="section-title">時間割</h2>
+            <ul class="info-list">
+                <li class="info-item">
+                    <span class="info-label"><i class="fa-regular fa-calendar"></i> 日時</span>
+                    <span class="info-value">2026年X月X日（土）<br>開場 18:30 / 開演 19:00</span>
+                </li>
+                <li class="info-item">
+                    <span class="info-label"><i class="fa-solid fa-location-dot"></i> 会場</span>
+                    <span class="info-value">〇〇ホール（東京都渋谷区XX-XX）</span>
+                </li>
+            </ul>
+            
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3240.828030772592!2d139.7645498763071!3d35.6812361725871!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188bfbd89f7007%3A0x277c49ba34ed38!2z5p2x5Lqs6aeF!5e0!3m2!1sja!2sjp!4v1700000000000!5m2!1sja!2sjp" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </section>
+
+        <section id="member">
+            <h2 class="section-title">出演者</h2>
+            <ul class="member-list">
+                <li class="member-item">コンビ名 A</li>
+                <li class="member-item">コンビ名 B</li>
+                <li class="member-item">コンビ名 C</li>
+                <li class="member-item">コンビ名 D</li>
+                <li class="member-item">コンビ名 E</li>
+            </ul>
+        </section>
+
+        <section id="ticket">
+            <h2 class="section-title">チケット</h2>
+            <div class="ticket-area">
+                <p style="margin-bottom: 15px;">取り置き予約はこちらから</p>
+                <a href="#" class="btn-ticket" target="_blank">
+                    <i class="fa-solid fa-ticket"></i> TIGETで予約する
+                </a>
+            </div>
+        </section>
+
+        <footer>
+            <span class="copyright">&copy; 2026 集団下校実行委員会</span>
+            <div class="creator-credit">
+                Web Design: <a href="#">Kazuma Sekine</a>
+            </div>
+        </footer>
+    </div>
+
+</body>
+</html>
